@@ -8,10 +8,10 @@ import java.util.stream.Collectors;
 
 public class PriceReader
 {
-    public List<Price> readPrices(String fileName) throws IOException
+    public List<CommissionedPrice> readPrices(String fileName) throws IOException
     {
         return readLines(fileName).stream()
-                .map(Price::from)
+                .map(CommissionedPrice::from)
                 .collect(Collectors.toList());
     }
 

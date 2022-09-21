@@ -1,4 +1,6 @@
-package com;
+package com.auxilliary;
+
+import com.CommissionedPrice;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

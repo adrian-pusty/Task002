@@ -1,5 +1,6 @@
-package com;
+package com.auxilliary;
 
+import com.CommissionedPrice;
 import lombok.extern.java.Log;
 
 import java.io.IOException;

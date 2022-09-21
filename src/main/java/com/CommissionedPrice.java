@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 @ToString
 @Builder(access = AccessLevel.PRIVATE)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-class CommissionedPrice implements Serializable
+public class CommissionedPrice implements Serializable
 {
     static final long serialVersionUID = 1L;
 
@@ -36,8 +36,8 @@ class CommissionedPrice implements Serializable
         return CommissionedPrice.builder()
                 .id(Long.valueOf(row[0].trim()))
                 .instrumentName(row[1].trim())
-                .bid(new BigDecimal(row[2].trim()).multiply(BID_MUL))
-                .ask(new BigDecimal(row[3].trim()).multiply(ASK_MUL))
+                .ask(new BigDecimal(row[2].trim()).multiply(ASK_MUL))
+                .bid(new BigDecimal(row[3].trim()).multiply(BID_MUL))
                 .timestamp(LocalDateTime.from(FORMATTER.parse(row[4])))
                 .build();
     }

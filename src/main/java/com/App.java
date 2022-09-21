@@ -9,15 +9,17 @@ import java.util.Properties;
 @Log
 public class App
 {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException
+    {
         Properties properties = loadProperties();
 
         PriceReader reader = new PriceReader();
-        List<String> strings = reader.readLines(properties.getProperty("feed.path"));
-        System.out.println(strings);
+        List<Price> prices = reader.readPrices(properties.getProperty("feed.path"));
+        prices.forEach(System.out::println);
     }
 
-    private static Properties loadProperties() throws IOException {
+    private static Properties loadProperties() throws IOException
+    {
         Properties props = new Properties();
         props.load(App.class.getClassLoader().getResourceAsStream("app.properties"));
         return props;

@@ -1,8 +1,5 @@
 package com.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.*;
 
 import java.io.Serializable;
@@ -30,8 +27,6 @@ public class CommissionedPrice implements Serializable
     private String instrumentName;
     private BigDecimal bid; // assume it means sell price
     private BigDecimal ask; // assume it means buy price
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss:SSS")
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime timestamp;
 
     public static CommissionedPrice from(String line)

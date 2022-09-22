@@ -41,4 +41,9 @@ public class CommissionedPrice implements Serializable
                 .timestamp(LocalDateTime.from(FORMATTER.parse(row[4])))
                 .build();
     }
+
+    public static CommissionedPrice empty()
+    {
+        return CommissionedPrice.builder().build();
+    }
 }

@@ -1,5 +1,8 @@
 package com.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.*;
 
 import java.io.Serializable;
@@ -8,10 +11,10 @@ import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@Getter
-@ToString
-@Builder(access = AccessLevel.PRIVATE)
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CommissionedPrice implements Serializable
 {
     static final long serialVersionUID = 1L;
@@ -23,11 +26,13 @@ public class CommissionedPrice implements Serializable
     private static final BigDecimal BID_MUL = HUNDRED.subtract(COMMISSION).divide(HUNDRED, MC);
     private static final BigDecimal ASK_MUL = HUNDRED.add(COMMISSION).divide(HUNDRED, MC);
 
-    private final Long id;
-    private final String instrumentName;
-    private final BigDecimal bid; // assume it means sell price
-    private final BigDecimal ask; // assume it means buy price
-    private final LocalDateTime timestamp;
+    private Long id;
+    private String instrumentName;
+    private BigDecimal bid; // assume it means sell price
+    private BigDecimal ask; // assume it means buy price
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss:SSS")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime timestamp;
 
     public static CommissionedPrice from(String line)
     {
@@ -38,12 +43,18 @@ public class CommissionedPrice implements Serializable
                 .instrumentName(row[1].trim())
                 .ask(new BigDecimal(row[2].trim()).multiply(ASK_MUL))
                 .bid(new BigDecimal(row[3].trim()).multiply(BID_MUL))
-                .timestamp(LocalDateTime.from(FORMATTER.parse(row[4])))
+                .timestamp(LocalDateTime.from(FORMATTER.parse(row[4].trim())))
                 .build();
     }
 
     public static CommissionedPrice empty()
     {
         return CommissionedPrice.builder().build();
+    }
+
+    @Override
+    public String toString()
+    {
+        return id + ", " + instrumentName + ", " + bid + ", " + ask + ", " + timestamp.format(FORMATTER).trim();
     }
 }

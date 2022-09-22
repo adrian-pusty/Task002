@@ -1,5 +1,6 @@
 package com;
 
+import com.domain.CommissionedPrice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ public class PriceController
 
     @GetMapping(value="/", produces = "application/json")
     public @ResponseBody
-    List<CommissionedPrice> getPath() throws IOException
+    List<CommissionedPrice> getPrices() throws IOException
     {
         return priceReader.readPrices(feedPath);
     }

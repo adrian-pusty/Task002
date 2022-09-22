@@ -1,5 +1,6 @@
 package com;
 
+import com.domain.CommissionedPrice;
 import org.springframework.stereotype.Component;
 
 import java.io.*;

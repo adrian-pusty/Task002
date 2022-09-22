@@ -1,5 +1,6 @@
 package com;
 
+import com.domain.CommissionedPrice;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 

@@ -1,5 +1,6 @@
 package com;
 
+import com.domain.CommissionedPrice;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -7,7 +8,8 @@ import java.time.Month;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CommissionedPriceTest {
+class CommissionedPriceTest
+{
     public static final CommissionedPrice price = CommissionedPrice.from("106, EUR/USD, 1.1000,1.2000,01-06-2020 12:01:01:001");
 
     @Test

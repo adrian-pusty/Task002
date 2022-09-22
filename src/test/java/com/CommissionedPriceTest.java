@@ -11,7 +11,8 @@ class CommissionedPriceTest {
     public static final CommissionedPrice price = CommissionedPrice.from("106, EUR/USD, 1.1000,1.2000,01-06-2020 12:01:01:001");
 
     @Test
-    public void fromTest() {
+    public void fromTest()
+    {
         assertEquals(106, price.getId());
         assertEquals("EUR/USD", price.getInstrumentName());
         assertEquals(0, new BigDecimal("1.1011").compareTo(price.getAsk()));

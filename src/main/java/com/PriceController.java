@@ -15,27 +15,33 @@ import java.util.List;
 
 //temporarily reads from text file
 @Controller
-@RequestMapping("prices")
 @RequiredArgsConstructor
+@RequestMapping("prices")
 public class PriceController
 {
     @Value("${feed.path}")
     private String feedPath;
     private final PriceReader priceReader;
 
-    @GetMapping(value="/{left}/{right}", produces = "application/json")
-    public @ResponseBody CommissionedPrice getPrice(@PathVariable String left, @PathVariable String right) throws IOException
-    {
-        return priceReader.readPrices(feedPath).stream()
-                .filter(price -> (left + "/" + right).toUpperCase().equals(price.getInstrumentName()))
-                .max(Comparator.comparing(CommissionedPrice::getTimestamp))
-                .orElse(CommissionedPrice.empty());
-    }
-
     @GetMapping(value="/", produces = "application/json")
     public @ResponseBody
     List<CommissionedPrice> getPrices() throws IOException
     {
         return priceReader.readPrices(feedPath);
+    }
+
+    @GetMapping(value="/{leftCurrency}/{rightCurrency}", produces = "application/json")
+    public @ResponseBody CommissionedPrice getPrice(@PathVariable String leftCurrency, @PathVariable String rightCurrency) throws IOException
+    {
+        return priceReader.readPrices(feedPath).stream()
+                .filter(price -> matches(leftCurrency, rightCurrency, price))
+                .max(Comparator.comparing(CommissionedPrice::getTimestamp))
+                .orElse(CommissionedPrice.empty());
+    }
+
+    private boolean matches(String leftCurrency, String rightCurrency, CommissionedPrice price)
+    {
+        String pair = leftCurrency + "/" + rightCurrency;
+        return pair.toUpperCase().equals(price.getInstrumentName());
     }
 }
